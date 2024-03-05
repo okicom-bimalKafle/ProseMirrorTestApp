@@ -86,7 +86,7 @@ const mentionStart = async (event: Event) => {
   console.log("mentionStart", inputEvent);
   // Comment.getMentionMembers(c.value)
   const keyData = inputEvent.data;
-  if (keyData == "@") {
+  if (keyData == "@" || keyData == "＠") {
     setTimeout(() => setIsOpen(true), 100);
   }
 };
@@ -184,56 +184,62 @@ const insertMention = (id: number, name: string) => {
 </script>
 
 <template>
-  <div ref="commentInput" class="ProseMirror" @beforeinput="mentionStart"></div>
-  <div>
-    <TransitionRoot
-      leave="duration-100 ease-in"
-      leave-from="opacity-100"
-      leave-to="opacity-0"
-      :show="isOpenMention"
-      as="template"
-      enter="duration-100 ease-out"
-      enter-to="opacity-100"
-      enter-from="opacity-0"
-    >
-      <Dialog as="form" class="relative z-50" @close="setIsOpen">
-        <!-- パネル コンテナーの固定兄弟としてレンダリングされる背景 -->
-        <div class="fixed inset-0 bg-black/40" aria-hidden="true">
-          <div class="flex min-h-full items-center justify-center p-4">
-            <DialogPanel>
-              <div class="rounded-lg bg-white py-2.5 px-3 h-48 w-60">
-                <div class="flex justify-between items-center mb-2">
-                  <h4 class="ml-0.5 text-sm md:text-xs font-bold">
-                    メンション
-                  </h4>
-                </div>
-                <section class="flex flex-col h-full">
-                  <ul
-                    ref="container"
-                    class="overflow-y-scroll max-h-[calc(100%_-_56px)]"
-                    @scroll=""
-                  >
-                    <li
-                      v-for="(user, index) in displayData"
-                      :key="index"
-                      :class="{
-                        MentionSelected: selectedMemberIndex === index,
-                      }"
-                      class="py-1 px-3 cursor-pointer text-[#767676] text-sm md:text-x flex items-center truncate focus:bg-[#efefef] hover:overflow-scroll none-scrollbar"
-                      @click.prevent="
-                        onMentionNameClick($event, user.id, user.name, index)
-                      "
+  <div class="w-full">
+    <div
+      ref="commentInput"
+      class="ProseMirror"
+      @beforeinput="mentionStart"
+    ></div>
+    <div>
+      <TransitionRoot
+        leave="duration-100 ease-in"
+        leave-from="opacity-100"
+        leave-to="opacity-0"
+        :show="isOpenMention"
+        as="template"
+        enter="duration-100 ease-out"
+        enter-to="opacity-100"
+        enter-from="opacity-0"
+      >
+        <Dialog as="form" class="relative z-50" @close="setIsOpen">
+          <!-- パネル コンテナーの固定兄弟としてレンダリングされる背景 -->
+          <div class="fixed inset-0 bg-black/40" aria-hidden="true">
+            <div class="flex min-h-full items-center justify-center p-4">
+              <DialogPanel>
+                <div class="rounded-lg bg-white py-2.5 px-3 h-48 w-60">
+                  <div class="flex justify-between items-center mb-2">
+                    <h4 class="ml-0.5 text-sm md:text-xs font-bold">
+                      メンション
+                    </h4>
+                  </div>
+                  <section class="flex flex-col h-full">
+                    <ul
+                      ref="container"
+                      class="overflow-y-scroll max-h-[calc(100%_-_56px)]"
+                      @scroll=""
                     >
-                      {{ user.name }}
-                    </li>
-                  </ul>
-                </section>
-              </div>
-            </DialogPanel>
+                      <li
+                        v-for="(user, index) in displayData"
+                        :key="index"
+                        :class="{
+                          MentionSelected: selectedMemberIndex === index,
+                        }"
+                        class="py-1 px-3 cursor-pointer text-[#767676] text-sm md:text-x flex items-center truncate focus:bg-[#efefef] hover:overflow-scroll none-scrollbar"
+                        @click.prevent="
+                          onMentionNameClick($event, user.id, user.name, index)
+                        "
+                      >
+                        {{ user.name }}
+                      </li>
+                    </ul>
+                  </section>
+                </div>
+              </DialogPanel>
+            </div>
           </div>
-        </div>
-      </Dialog>
-    </TransitionRoot>
+        </Dialog>
+      </TransitionRoot>
+    </div>
   </div>
 </template>
 
@@ -254,13 +260,13 @@ const insertMention = (id: number, name: string) => {
   line-height: normal;
   white-space: pre-wrap;
   width: 100%;
-  min-height: 56px;
+  min-height: 100px;
   max-height: 6rem;
   overflow-y: scroll;
 }
 
 .ProseMirror > div {
-  max-height: 160px;
+  max-height: 70%;
   overflow-y: scroll;
 }
 .MentionSelected {

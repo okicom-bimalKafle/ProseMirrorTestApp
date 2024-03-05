@@ -4,20 +4,20 @@ import CommentTextArea from "./components/CommentTextArea.vue";
 import { FocusTrap } from "@headlessui/vue";
 </script>
 
-<template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
+<template class="w-full flex">
+  <div class="w-full flex-row justify-center place-content-center" > 
+     <a href="#">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>
-    <a href="https://vuejs.org/" target="_blank">
+    <a href="#">
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    </a> 
 
-    <FocusTrap>
-      <div>
+    <!-- <FocusTrap> -->
+      <div class="w-full">
         <CommentTextArea />
       </div>
-    </FocusTrap>
+    <!-- </FocusTrap> -->
   </div>
 </template>
 
