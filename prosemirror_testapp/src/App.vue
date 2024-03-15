@@ -14,7 +14,13 @@ import { FocusTrap } from "@headlessui/vue";
     </a> 
 
     <!-- <FocusTrap> -->
-      <div class="w-full">
+      <div class="w-full mb-9 p-4">
+        <div>
+            -- Not selectable text --***---
+        </div>
+        <div class="select-auto mb-9 p-4">
+            -- Selectable text --***--- 
+        </div>
         <CommentTextArea />
       </div>
     <!-- </FocusTrap> -->
